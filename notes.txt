@@ -1,0 +1,2 @@
+Change VueRouterMode in quasarconf.js
+added mode: 'history' in route/index.js
