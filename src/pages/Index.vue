@@ -4,89 +4,95 @@
     <div class="formContainer self-center">
 
       <form @submit.prevent="submit">
-        <p class="text-h5 text-center">
-          <q-icon name="lock" /> Account Login</p>
-        <q-banner
-          rounded
-          inline-actions
-          :class="activationBanner"
-          class="q-mb-sm text-center"
-          v-if="$route.params.token"
-        >
-          <q-icon
-            style="font-size: 2em;"
-            :name="activationIcon"
-          /> {{ activationMessage }}
-        </q-banner>
-        <q-input
-          dark
-          v-model="$v.email.$model"
-          label="Username/Email"
-          @keyup.enter="login"
-          :error="$v.email.$dirty &&!$v.email.required"
-          error-message="Username/Email is required."
-          bottom-slots
-        >
-        </q-input>
-        <q-input
-          dark
-          v-model="$v.password.$model"
-          :type="isPwd ? 'password' : 'text'"
-          class="q-mt-sm form__input"
-          label="Password"
-          @keyup.enter="login"
-          :error="$v.password.$dirty && !$v.password.required ||$v.password.$dirty && !$v.password.minLength "
-          error-message="Password must be at least 8 and required."
-          bottom-slots
-        >
-          <template v-slot:append>
+        <div class="bg-white text-center">
+          <img
+            src="/statics/logo.jpg"
+            width="200"
+          />
+        </div>
+        <br />
+        <p class="text-h5 text-center ">
+          <q-banner
+            rounded
+            inline-actions
+            :class="activationBanner"
+            class="q-mb-sm text-center"
+            v-if="$route.params.token"
+          >
             <q-icon
-              :name="isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"
-            />
-          </template>
-        </q-input>
-        <div>
-          <q-btn
-            @click="back"
-            color="secondary"
-            class="q-ma-sm"
-            no-caps
+              style="font-size: 2em;"
+              :name="activationIcon"
+            /> {{ activationMessage }}
+          </q-banner>
+          <q-input
+            dark
+            v-model="$v.email.$model"
+            label="Username/Email"
+            @keyup.enter="login"
+            :error="$v.email.$dirty &&!$v.email.required"
+            error-message="Username/Email is required."
+            bottom-slots
           >
-            Cancel
-          </q-btn>
-          <q-btn
-            :loading="loading"
-            @click="login"
-            color="primary"
-            class="q-ma-sm"
-            no-caps
+          </q-input>
+          <q-input
+            dark
+            v-model="$v.password.$model"
+            :type="isPwd ? 'password' : 'text'"
+            class="q-mt-sm form__input"
+            label="Password"
+            @keyup.enter="login"
+            :error="$v.password.$dirty && !$v.password.required ||$v.password.$dirty && !$v.password.minLength "
+            error-message="Password must be at least 8 and required."
+            bottom-slots
           >
-            Login
-          </q-btn>
+            <template v-slot:append>
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
+            </template>
+          </q-input>
+          <div>
+            <q-btn
+              @click="back"
+              color="primary"
+              class="q-ma-sm"
+              no-caps
+            >
+              Cancel
+            </q-btn>
+            <q-btn
+              :loading="loading"
+              @click="login"
+              color="secondary"
+              class="q-ma-sm"
+              no-caps
+            >
+              Login
+            </q-btn>
 
-        </div>
-        <div class="float-right">
-          <q-btn
-            to="/register"
-            color="white"
-            class="q-ma-sm"
-            flat
-            no-caps
-          >
-            Register Account
-          </q-btn>
-          <q-btn
-            to="/password/reset"
-            color="white"
-            class="q-ma-sm"
-            flat
-            no-caps
-          >
-            Forgot Password
-          </q-btn>
-        </div>
+          </div>
+          <div class="float-right">
+            <q-btn
+              to="/register"
+              color="white"
+              class="q-ma-sm"
+              flat
+              no-caps
+            >
+              Register Account
+            </q-btn>
+            <q-btn
+              to="/password/reset"
+              color="white"
+              class="q-ma-sm"
+              flat
+              no-caps
+            >
+              Forgot Password
+            </q-btn>
+          </div>
 
       </form>
     </div>
@@ -104,6 +110,7 @@ import {
   minLength
 } from 'vuelidate/lib/validators'
 import {
+  mapState,
   mapActions
 } from 'vuex'
 
@@ -122,7 +129,13 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
-      vm.prevRoute = from
+      var token = vm.$store.getters['users/token']
+      if (token !== '') {
+        var user = vm.$store.getters['users/user']
+        vm.$router.push({
+          path: `/dashboard/profile/${user.optimus_id}`
+        })
+      }
     })
   },
   validations: {
@@ -133,6 +146,9 @@ export default {
       required,
       minLength: minLength(8)
     }
+  },
+  components: {
+    ...mapState('users', ['token', 'user'])
   },
   methods: {
     ...mapActions('users', ['setToken', 'setUser', 'setDelivery']),

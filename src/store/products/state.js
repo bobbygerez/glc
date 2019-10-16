@@ -20,5 +20,7 @@ export default {
   },
   mainCategories: [],
   subCategories: [],
-  moreCategories: []
+  moreCategories: [],
+  groups: [],
+  catalogs: []
 }

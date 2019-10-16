@@ -14,6 +14,8 @@ import cities from './cities'
 import brgys from './brgys'
 import paymentOptions from './payment-options'
 import payments from './payments'
+import groups from './groups'
+import catalogs from './catalogs'
 import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 
@@ -37,7 +39,9 @@ export default function (/* { ssrContext } */) {
       cities,
       brgys,
       paymentOptions,
-      payments
+      payments,
+      groups,
+      catalogs
     },
     plugins: [createPersistedState()]
   })

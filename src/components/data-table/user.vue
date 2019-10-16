@@ -30,7 +30,7 @@
                     </q-btn>
                     <q-btn @click="$emit('edit', props.row.optimus_id)" color="secondary" flat>
                         <q-icon name="edit" />
-                        <q-tooltip transition-show="flip-right" transition-hide="flip-left" content-class="bg-purple" content-style="font-size: 16px" anchor="top left" :offset="[30, 30]">
+                        <q-tooltip transition-show="flip-right" transition-hide="flip-left" content-class="bg-secondary" content-style="font-size: 16px" anchor="top left" :offset="[30, 30]">
                             Edit {{ entity }}
                         </q-tooltip>
                     </q-btn>
@@ -41,29 +41,9 @@
                         <q-icon name="delete" />
                     </q-btn>
                   </span>
-                  <span v-if="viewPayment">
-                    <q-btn @click="$emit('print', props.row.optimus_id)" color="secondary" flat>
-                        <q-icon name="receipt" />
-                        <q-tooltip transition-show="flip-right" transition-hide="flip-left" content-class="bg-purple" content-style="font-size: 16px" anchor="top left" :offset="[30, 30]">
-                            Receipt {{ entity }}
-                        </q-tooltip>
-                    </q-btn>
-                    <q-btn @click="$emit('info', props.row.optimus_id)" color="primary" flat>
-                        <q-icon name="info" />
-                        <q-tooltip transition-show="flip-right" transition-hide="flip-left" content-class="bg-primary" content-style="font-size: 16px" anchor="top left" :offset="[30, 30]">
-                            Info {{ entity }}
-                        </q-tooltip>
-                    </q-btn>
-                  </span>
+
                 </q-td>
-                <q-td v-if="restoreData">
-                    <q-btn @click="$emit('restore', props.row.optimus_id)" color="primary" flat>
-                        <q-icon name="restore" />
-                        <q-tooltip transition-show="flip-right" transition-hide="flip-left" content-class="bg-primary" content-style="font-size: 16px" anchor="top left" :offset="[30, 30]">
-                            Restore {{ entity }}
-                        </q-tooltip>
-                    </q-btn>
-                </q-td>
+
             </q-tr>
         </template>
 

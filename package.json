@@ -1,8 +1,8 @@
 {
-  "name": "Grandflex",
+  "name": "grandflex",
   "version": "0.0.1",
   "description": "ecommerce",
-  "productName": "a2ronline",
+  "productName": "Grandflex",
   "cordovaId": "org.cordova.quasar.app",
   "author": "bobbygerez <bobby.gerez@yahoo.com>",
   "private": true,

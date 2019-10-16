@@ -1,51 +1,184 @@
 <template>
-<div class="q-ma-md">
+  <div class="q-ma-md">
 
     <div class="row">
-        <div class="col-12">
-            <p class="text-h5 q-ma-sm">
-                <q-icon name="edit" color="grey" />
-                {{ locUser.firstname }} {{ locUser.middlename }} {{ locUser.lastname }}
-            </p>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <q-input outlined v-model="$v.locUser.username.$model" bottom-slots error-message="Username is required." :error="$v.locUser.username.$error" label="Username" dense />
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <q-input outlined v-model="$v.locUser.email.$model" bottom-slots error-message="Email must be valid and required." label="Email" :error="$v.locUser.email.$error" dense class="q-ml-sm"/>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <q-input outlined v-model="$v.locUser.mobile.$model" bottom-slots error-message="Mobile must be 11 digits and required." label="Mobile" :error="$v.locUser.mobile.$error" dense class="q-ml-sm"/>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <q-input outlined v-model="$v.locUser.firstname.$model" bottom-slots error-message="Firstname is required." label="Firstname"  :error="$v.locUser.firstname.$error" dense />
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <q-input outlined v-model="$v.locUser.middlename.$model" bottom-slots error-message="Middlename is required." label="Middlename"  :error="$v.locUser.middlename.$error" dense class="q-ml-sm"/>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <q-input outlined v-model="$v.locUser.lastname.$model" bottom-slots error-message="Lastname is required." label="Lastname"  :error="$v.locUser.lastname.$error" dense class="q-ml-sm"/>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <q-select outlined v-model="$v.locUser.address.province_id.$model" :options="provinces" label="Province"   :error="$v.locUser.address.province_id.$error" bottom-slots error-message="Province is required." dense />
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <q-select outlined v-model="$v.locUser.address.city_id.$model" :options="cities" label="City" :error="$v.locUser.address.city_id.$error" bottom-slots error-message="City is required." dense class="q-ml-sm"/>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <q-select outlined v-model="$v.locUser.address.brgy_id.$model" :options="brgys" label="Brgys" :error="$v.locUser.address.brgy_id.$error" bottom-slots error-message="Barangay is required." dense class="q-ml-sm"/>
-        </div>
-        <div class="col-12">
-            <q-input type="textarea" outlined v-model="$v.locUser.address.street_lot_blk.$model" label="Blk, Lot and Street No."  :error="$v.locUser.address.street_lot_blk.$error" bottom-slots error-message="Street, lot and block is required." dense />
-        </div>
-        <div class="col-12">
-            <q-btn @click="cancel" color="grey-8" label="Cancel" class="q-ma-sm" no-caps />
-            <q-btn @click="update" color="secondary" label="Update" class="q-ma-sm" no-caps />
-            <q-btn :to="`/dashboard/user/${$route.params.id}/change-password`" label="Change Password" color="primary" class="q-ma-sm" no-caps />
-        </div>
+      <div class="col-12">
+        <p class="text-h5 q-ma-sm">
+          <q-icon
+            name="edit"
+            color="grey"
+          />
+          {{ locUser.firstname }} {{ locUser.middlename }} {{ locUser.lastname }}
+        </p>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <q-input
+          outlined
+          v-model="$v.locUser.username.$model"
+          bottom-slots
+          error-message="Username is required."
+          :error="$v.locUser.username.$error"
+          label="Username"
+          class="q-ma-sm"
+          dense
+        />
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <q-input
+          outlined
+          v-model="$v.locUser.email.$model"
+          bottom-slots
+          error-message="Email must be valid and required."
+          label="Email"
+          class="q-ma-sm"
+          :error="$v.locUser.email.$error"
+          dense
+        />
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <q-input
+          outlined
+          v-model="$v.locUser.mobile.$model"
+          bottom-slots
+          error-message="Mobile must be 11 digits and required."
+          label="Mobile"
+          class="q-ma-sm"
+          :error="$v.locUser.mobile.$error"
+          dense
+        />
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <q-input
+          outlined
+          v-model="$v.locUser.firstname.$model"
+          bottom-slots
+          error-message="Firstname is required."
+          label="Firstname"
+          class="q-ma-sm"
+          :error="$v.locUser.firstname.$error"
+          dense
+        />
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <q-input
+          outlined
+          v-model="$v.locUser.middlename.$model"
+          bottom-slots
+          error-message="Middlename is required."
+          label="Middlename"
+          class="q-ma-sm"
+          :error="$v.locUser.middlename.$error"
+          dense
+        />
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <q-input
+          outlined
+          v-model="$v.locUser.lastname.$model"
+          bottom-slots
+          error-message="Lastname is required."
+          label="Lastname"
+          class="q-ma-sm"
+          :error="$v.locUser.lastname.$error"
+          dense
+        />
+      </div>
+      <div class="col-12">
+        <q-select
+          outlined
+          v-model="$v.locUser.roles.$model"
+          :options="roles"
+          label="Roles"
+          class="q-ma-sm"
+          :error="$v.locUser.roles.$error"
+          bottom-slots
+          error-message="Please add role/s."
+          multiple
+          dense
+        />
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <q-select
+          outlined
+          v-model="$v.locUser.address.province_id.$model"
+          :options="provinces"
+          label="Province"
+          class="q-ma-sm"
+          use-chips
+          :error="$v.locUser.address.province_id.$error"
+          bottom-slots
+          error-message="Province is required."
+          dense
+        />
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <q-select
+          outlined
+          v-model="$v.locUser.address.city_id.$model"
+          :options="cities"
+          label="City"
+          class="q-ma-sm"
+          use-chips
+          :error="$v.locUser.address.city_id.$error"
+          bottom-slots
+          error-message="City is required."
+          dense
+        />
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <q-select
+          outlined
+          v-model="$v.locUser.address.brgy_id.$model"
+          :options="brgys"
+          label="Brgys"
+          class="q-ma-sm"
+          use-chips
+          :error="$v.locUser.address.brgy_id.$error"
+          bottom-slots
+          error-message="Barangay is required."
+          dense
+        />
+      </div>
+      <div class="col-12">
+        <q-input
+          type="textarea"
+          outlined
+          v-model="$v.locUser.address.street_lot_blk.$model"
+          label="Blk, Lot and Street No."
+          class="q-ma-sm"
+          :error="$v.locUser.address.street_lot_blk.$error"
+          bottom-slots
+          error-message="Street, lot and block is required."
+          dense
+        />
+      </div>
+      <div class="col-12">
+        <q-btn
+          @click="cancel"
+          color="grey-8"
+          label="Cancel"
+          class="q-ma-sm"
+          no-caps
+        />
+        <q-btn
+          @click="update"
+          color="secondary"
+          label="Update"
+          class="q-ma-sm"
+          no-caps
+        />
+        <q-btn
+          :to="`/dashboard/user/${$route.params.id}/change-password`"
+          label="Change Password"
+          color="primary"
+          class="q-ma-sm"
+          no-caps
+        />
+
+      </div>
     </div>
 
-</div>
+  </div>
 </template>
 
 <script>
@@ -139,6 +272,7 @@ export default {
     },
     data () {
       let u = this.editUser
+      console.log(u.roles)
       let roles = u.roles.map(function (v) {
         return v.value
       })

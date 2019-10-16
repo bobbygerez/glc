@@ -44,42 +44,25 @@ export default {
         rowsPerPage: 10 // specifying this determines pagination is server-side
       },
       serverData: [],
-      columns: [{
-        name: 'Store',
-        label: 'Store',
-        align: 'left',
-        field: row => row.branch.name
-      },
-      {
-        name: 'name',
-        label: 'Name',
-        field: 'name',
-        align: 'left'
-      },
-      {
-        name: 'sku',
-        label: 'SKU',
-        align: 'left',
-        field: row => row.sku
-      },
-      {
-        name: 'barcode',
-        label: 'Barcode',
-        align: 'left',
-        field: row => row.barcode
-      },
-      {
-        name: 'price',
-        label: 'Price',
-        align: 'left',
-        field: row => this.$options.filters.currency(row.price, '₱ ')
-      },
-      {
-        name: 'qty',
-        label: 'Qty',
-        align: 'left',
-        field: row => row.qty
-      }
+      columns: [
+        {
+          name: 'name',
+          label: 'Name',
+          field: 'name',
+          align: 'left'
+        },
+        {
+          name: 'category',
+          label: 'Category',
+          field: row => row.category.name,
+          align: 'left'
+        },
+        {
+          name: 'catalog',
+          label: 'Catalog',
+          field: row => row.catalog.name,
+          align: 'left'
+        }
       ]
     }
   },
@@ -94,20 +77,14 @@ export default {
     },
     add () {
       this.setProduct({
-        branch_id: null,
+        catalog_id: null,
+        group_id: [],
         main_category_id: null,
         sub_category_id: null,
         more_category_id: null,
         category_id: null,
-        chart_account_id: null,
-        tax_type_id: null,
         product_id: null,
         name: '',
-        sku: '',
-        barcode: '',
-        discount: 0,
-        price: 0,
-        qty: 0,
         desc: ''
       })
       this.$router.push({

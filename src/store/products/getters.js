@@ -7,3 +7,7 @@ export const mainCategories = (state) => state.mainCategories
 export const subCategories = (state) => state.subCategories
 
 export const moreCategories = (state) => state.moreCategories
+
+export const groups = (state) => state.groups
+
+export const catalogs = (state) => state.catalogs

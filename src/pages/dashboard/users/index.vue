@@ -1,20 +1,53 @@
 <template>
-<div class="row">
-  <div class="col-md-12 gt-sm">
-    <generic-table :data="serverData" :columns="columns" :pagination="serverPagination" @serverside-request="request" @search-change="filter = $event" :search-field="filter" @selected="selected" ref="userTable" :title="'All Users'" :loading="loading" :search-placeholder="'Search Users...'" entity="User" @edit="edit" @restore="restore" @del="del">
-    </generic-table>
+  <div class="row">
+    <div class="col-md-12 gt-sm">
+      <generic-table
+        :data="serverData"
+        :columns="columns"
+        :pagination="serverPagination"
+        @serverside-request="request"
+        @search-change="filter = $event"
+        :search-field="filter"
+        @selected="selected"
+        ref="userTable"
+        :title="'All Users'"
+        :loading="loading"
+        :search-placeholder="'Search Users...'"
+        entity="User"
+        @edit="edit"
+        @restore="restore"
+        @del="del"
+      >
+      </generic-table>
+    </div>
+    <div class="col-xs-12 lt-md">
+      <grid
+        :data="serverData"
+        :columns="columns"
+        :pagination="serverPagination"
+        @serverside-request="request"
+        @search-change="filter = $event"
+        :search-field="filter"
+        @selected="selected"
+        ref="userTable"
+        :title="'All Users'"
+        :loading="loading"
+        :search-placeholder="'Search Users...'"
+        :grid="true"
+        entity="User"
+        @edit="edit"
+        @restore="restore"
+        @del="del"
+      >
+      </grid>
+    </div>
   </div>
-  <div class="col-xs-12 lt-md">
-    <grid :data="serverData" :columns="columns" :pagination="serverPagination" @serverside-request="request" @search-change="filter = $event" :search-field="filter" @selected="selected" ref="userTable" :title="'All Users'" :loading="loading" :search-placeholder="'Search Users...'" :grid="true" entity="User" @edit="edit" @restore="restore" @del="del">
-    </grid>
-  </div>
-</div>
 </template>
 
 <script>
 // $q.platform.is.mobile
 import grid from 'components/data-table/grid'
-import genericTable from 'components/data-table/user'
+import genericTable from 'components/data-table/generic'
 import catchError from 'components/api-errors/catch'
 import {
   debounce
@@ -163,7 +196,7 @@ export default {
               street_lot_blk: a.street_lot_blk
             }
           }
-
+          console.log(roles)
           this.setEditUser({
             fullname: user.fullname,
             username: user.name,

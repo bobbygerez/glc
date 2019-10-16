@@ -33,3 +33,11 @@ export const setProductSubCategory = (state, payload) => {
 export const setProductMoreCategory = (state, payload) => {
   state.product.more_category_id = payload
 }
+
+export const setGroups = (state, payload) => {
+  state.groups = payload
+}
+
+export const setCatalogs = (state, payload) => {
+  state.catalogs = payload
+}

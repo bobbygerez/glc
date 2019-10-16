@@ -1,46 +1,85 @@
 <template>
-<div class="q-ma-sm">
+  <div class="q-ma-sm">
     <form @submit.prevent="$emit('add')">
-        <div class="row">
-            <div class="col-12">
-                <p class="text-h5 q-ma-sm">
-                    <q-icon name="add_circle" color="grey" />
-                    {{ locProduct.name }}
-                </p>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <q-select outlined v-model="$v.locProduct.branch_id.$model" :options="branches" label="Select Store" class="q-ml-sm" bottom-slots :error="$v.locProduct.branch_id.$error" error-message="Store name is required." use-chips dense />
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <q-select outlined v-model="$v.locProduct.main_category_id.$model" :options="mainCategories" label="Category" class="q-ml-sm" bottom-slots :error="$v.locProduct.main_category_id.$error" error-message="Store name is required." use-chips dense />
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-4 gt-xs">
-                <q-input outlined v-model="$v.locProduct.name.$model" label="Product Name" class="q-ml-sm" :error="$v.locProduct.name.$error" bottom-slots error-message="Name is required." dense />
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-4 lt-sm">
-                <q-input outlined v-model="$v.locProduct.name.$model" label="Product Name" class="q-ml-sm q-mt-md" :error="$v.locProduct.name.$error" bottom-slots error-message="Name is required." dense />
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <amount label="Price" :value="$v.locProduct.price.$model" v-model="$v.locProduct.price.$model" :error="$v.locProduct.price.$error" bottom-slots error-message="Price is required." dense class="q-ml-sm"></amount>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-3 gt-xs">
-                <q-input maxlength="2" type="number" outlined v-model="$v.locProduct.qty.$model" label="Qty" class="q-ml-sm" :error="$v.locProduct.qty.$error" bottom-slots error-message="Qty is required" dense />
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-3 lt-sm">
-                <q-input maxlength="2" type="number" outlined v-model="$v.locProduct.qty.$model" label="Qty" class="q-ml-sm q-mt-md" :error="$v.locProduct.qty.$error" bottom-slots error-message="Qty is required" dense />
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-3">
-                <q-input maxlength="2" type="number" outlined v-model="$v.locProduct.discount.$model" label="Discount by %" class="q-ml-sm" :error="$v.locProduct.discount.$error" bottom-slots error-message="Discount is required" dense />
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-3">
-                <q-input outlined type="number" v-model="$v.locProduct.barcode.$model" label="Barcode" class="q-ml-sm" :error="$v.locProduct.barcode.$error" bottom-slots error-message="Barcode is required." dense />
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-3">
-                <q-input outlined v-model="$v.locProduct.sku.$model" label="SKU" class="q-ml-sm" :error="$v.locProduct.sku.$error" bottom-slots error-message="SKU is required." dense />
-            </div>
-            <div class="col-12">
-                <div class="q-ma-sm">
-                    <q-editor v-model="locProduct.desc" :dense="$q.screen.lt.md" :toolbar="[
+      <div class="row">
+        <div class="col-12">
+          <p class="text-h5 q-ma-sm">
+            <q-icon
+              name="add_circle"
+              color="grey"
+            />
+            {{ locProduct.name }}
+          </p>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <q-input
+            outlined
+            v-model="$v.locProduct.name.$model"
+            label="Product Name"
+            :error="$v.locProduct.name.$error"
+            bottom-slots
+            error-message="Name is required."
+            dense
+          />
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <q-input
+            outlined
+            v-model="$v.locProduct.item_code.$model"
+            label="Item Code"
+            class="q-ml-sm"
+            :error="$v.locProduct.item_code.$error"
+            bottom-slots
+            error-message="Item Code is required."
+            dense
+          />
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+          <q-select
+            outlined
+            v-model="$v.locProduct.group_id.$model"
+            :options="locGroups"
+            label="Group"
+            bottom-slots
+            :error="$v.locProduct.group_id.$error"
+            error-message="Group is required."
+            use-chips
+            dense
+            multiple
+          />
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+          <q-select
+            outlined
+            v-model="$v.locProduct.main_category_id.$model"
+            :options="mainCategories"
+            label="Category"
+            class="q-ml-sm"
+            bottom-slots
+            :error="$v.locProduct.main_category_id.$error"
+            error-message="Category is required."
+            dense
+          />
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+          <q-select
+            outlined
+            v-model="$v.locProduct.catalog_id.$model"
+            :options="locCatalogs"
+            label="Catalog"
+            class="q-ml-sm"
+            bottom-slots
+            :error="$v.locProduct.catalog_id.$error"
+            error-message="Catalog is required."
+            dense
+          />
+        </div>
+
+        <div class="col-12">
+          <q-editor
+            v-model="locProduct.desc"
+            :dense="$q.screen.lt.md"
+            :toolbar="[
                               [
                                 {
                                   label: $q.lang.editor.align,
@@ -113,7 +152,8 @@
                               ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
 
                               ['undo', 'redo']
-                            ]" :fonts="{
+                            ]"
+            :fonts="{
                               arial: 'Arial',
                               arial_black: 'Arial Black',
                               comic_sans: 'Comic Sans MS',
@@ -122,51 +162,85 @@
                               lucida_grande: 'Lucida Grande',
                               times_new_roman: 'Times New Roman',
                               verdana: 'Verdana'
-                            }" />
-                </div>
-
-            </div>
-            <div class="col-12">
-                <q-uploader accept="image/jpeg, image/png" label="Upload Product Images" multiple @added="added" hide-upload-btn ref="uploader" @removed="removed" style="width: 450px;">
-                    <template v-slot:list="scope">
-                        <q-list separator>
-                            <q-item v-for="file in scope.files" :key="file.name">
-                                <q-item-section>
-                                    <q-item-label class="full-width ellipsis">
-                                        {{ file.name }}
-                                    </q-item-label>
-
-                                    <q-item-label caption>
-                                        Status: {{ file.__status }}
-                                    </q-item-label>
-
-                                    <q-item-label caption>
-                                        {{ file.__sizeLabel }}
-                                        <!-- / {{ file.__progressLabel }} -->
-                                    </q-item-label>
-                                </q-item-section>
-
-                                <q-item-section v-if="file.__img" thumbnail >
-                                    <img :src="file.__img.src">
-                                </q-item-section>
-
-                                <q-item-section top side>
-                                   <q-radio v-model="is_primary" :val="file.name" style="margin-top: 5px;"/>
-                                </q-item-section>
-                                <q-item-section top side>
-                                    <q-btn class="q-mt-sm" color="negative" flat dense round icon="delete" @click="scope.removeFile(file)" />
-                                </q-item-section>
-                            </q-item>
-
-                        </q-list>
-                    </template>
-                </q-uploader>
-            </div>
+                            }"
+          />
 
         </div>
+        <div class="col-12">
+          <br />
+          <q-uploader
+            accept="image/jpeg, image/png"
+            label="Upload Product Images"
+            multiple
+            @added="added"
+            hide-upload-btn
+            ref="uploader"
+            @removed="removed"
+            style="width: 450px;"
+          >
+            <template v-slot:list="scope">
+              <q-list separator>
+                <q-item
+                  v-for="file in scope.files"
+                  :key="file.name"
+                >
+                  <q-item-section>
+                    <q-item-label class="full-width ellipsis">
+                      {{ file.name }}
+                    </q-item-label>
+
+                    <q-item-label caption>
+                      Status: {{ file.__status }}
+                    </q-item-label>
+
+                    <q-item-label caption>
+                      {{ file.__sizeLabel }}
+                      <!-- / {{ file.__progressLabel }} -->
+                    </q-item-label>
+                  </q-item-section>
+
+                  <q-item-section
+                    v-if="file.__img"
+                    thumbnail
+                  >
+                    <img :src="file.__img.src">
+                  </q-item-section>
+
+                  <q-item-section
+                    top
+                    side
+                  >
+                    <q-radio
+                      v-model="is_primary"
+                      :val="file.name"
+                      style="margin-top: 5px;"
+                    />
+                  </q-item-section>
+                  <q-item-section
+                    top
+                    side
+                  >
+                    <q-btn
+                      class="q-mt-sm"
+                      color="negative"
+                      flat
+                      dense
+                      round
+                      icon="delete"
+                      @click="scope.removeFile(file)"
+                    />
+                  </q-item-section>
+                </q-item>
+
+              </q-list>
+            </template>
+          </q-uploader>
+        </div>
+
+      </div>
     </form>
     <slot></slot>
-</div>
+  </div>
 </template>
 
 <script>
@@ -174,39 +248,27 @@
 import {
   required
 } from 'vuelidate/lib/validators'
-import amount from 'components/inputs/amount'
 import {
+  mapState,
   mapActions
 } from 'vuex'
 export default {
   props: ['product'],
-  components: {
-    amount
-  },
   validations: {
     locProduct: {
-      branch_id: {
+      group_id: {
         required
       },
       main_category_id: {
         required
       },
+      catalog_id: {
+        required
+      },
       name: {
         required
       },
-      sku: {
-        required
-      },
-      barcode: {
-        required
-      },
-      discount: {
-        required
-      },
-      price: {
-        required
-      },
-      qty: {
+      item_code: {
         required
       }
     }
@@ -215,6 +277,8 @@ export default {
     return {
       is_primary: null,
       selectedFile: [],
+      locCatalogs: [],
+      locGroups: [],
       check_if_document_upload: false,
       qeditor: 'Here we can customize your <b>description</b>...',
       locProduct: this.product,
@@ -234,15 +298,7 @@ export default {
     }
   },
   computed: {
-
-    branches () {
-      return this.$store.getters['branches/branches'].map(e => {
-        return {
-          label: e.name,
-          value: e.id
-        }
-      })
-    },
+    ...mapState('products', ['groups', 'catalogs']),
     mainCategories () {
       return this.$store.getters['products/mainCategories'].map(e => {
         return {
@@ -274,7 +330,9 @@ export default {
       'setSubCategories',
       'setMoreCategories',
       'setProductSubCategory',
-      'setProductMoreCategory'
+      'setProductMoreCategory',
+      'setGroups',
+      'setCatalogs'
     ]),
     ...mapActions('branches', ['setBranches']),
 
@@ -373,26 +431,39 @@ export default {
           }
         }
       }
+      var groupIds = this.locProduct.group_id.map(function (v) {
+        return v.id
+      })
+      console.log(groupIds)
       fd.append('is_primary', this.is_primary)
       fd.append('optimus_id', this.locProduct.optimus_id)
-      fd.append('branch_id', this.locProduct.branch_id.value)
+      fd.append('group_ids', groupIds)
       fd.append('category_id', categoryId)
+      fd.append('catalog_id', this.locProduct.catalog_id.value)
       fd.append('name', this.locProduct.name)
-      fd.append('sku', this.locProduct.sku)
-      fd.append('barcode', this.locProduct.barcode)
-      fd.append('discount', this.locProduct.discount)
-      fd.append('price', this.locProduct.price)
-      fd.append('qty', this.locProduct.qty)
+      fd.append('item_code', this.locProduct.item_code)
       fd.append('desc', this.locProduct.desc)
 
       return fd
+    },
+    getGroups () {
+      this.$axios.get('product_groups')
+        .then(res => {
+          this.locGroups = res.data.groups
+          this.setGroups(res.data.groups)
+        })
+    },
+    getCatalogs () {
+      this.$axios.get('product_catalogs')
+        .then(res => {
+          this.locCatalogs = res.data.catalogs
+          this.setCatalogs(res.data.catalogs)
+        })
     }
   },
   mounted () {
-    this.$axios.get('get-stores').then(res => {
-      this.setBranches(res.data.stores)
-    })
-
+    this.getGroups()
+    this.getCatalogs()
     if (this.locProduct.images != null) {
       for (var i = 0; i < this.locProduct.images.length; i++) {
         let fileName = this.locProduct.images[i].name
@@ -451,6 +522,6 @@ export default {
 
 <style>
 .dropzone .dz-preview .dz-progress {
-    opacity: 0
+  opacity: 0;
 }
 </style>

@@ -41,7 +41,7 @@
                     </q-btn>
                     <q-btn @click="$emit('edit', props.row.optimus_id)" color="secondary" flat>
                         <q-icon name="edit" />
-                        <q-tooltip transition-show="flip-right" transition-hide="flip-left" content-class="bg-purple" content-style="font-size: 16px" anchor="top left" :offset="[30, 30]">
+                        <q-tooltip transition-show="flip-right" transition-hide="flip-left" content-class="bg-secondary" content-style="font-size: 16px" anchor="top left" :offset="[30, 30]">
                             Edit {{ entity }}
                         </q-tooltip>
                     </q-btn>
@@ -55,7 +55,7 @@
                   <span v-if="viewPayment">
                     <q-btn @click="$emit('print', props.row.optimus_id)" color="secondary" flat>
                         <q-icon name="receipt" />
-                        <q-tooltip transition-show="flip-right" transition-hide="flip-left" content-class="bg-purple" content-style="font-size: 16px" anchor="top left" :offset="[30, 30]">
+                        <q-tooltip transition-show="flip-right" transition-hide="flip-left" content-class="bg-secondary" content-style="font-size: 16px" anchor="top left" :offset="[30, 30]">
                             Receipt {{ entity }}
                         </q-tooltip>
                     </q-btn>

@@ -2,7 +2,12 @@
 <div class="window-height window-width row justify-center items-center q-pa-sm main">
     <q-card class="q-pa-sm gt-sm formContainer" style="margin-top:-50px; ">
         <q-card-section dark>
-            <div class="text-h5 text-center"><q-icon name="account_circle" /> New Account</div>
+           <div class="bg-white text-center">
+          <img
+            src="/statics/logo.jpg"
+            width="200"
+          />
+        </div>
         </q-card-section>
         <q-card-section>
             <div class="row">

@@ -1,30 +1,64 @@
 <template>
-<q-layout view="lHh Lpr fFf">
-    <q-header elevated  color="negative">
-        <q-toolbar class="glossy bg-primary shadow-transition ">
-            <q-btn flat dense round @click="clickLeftDrawer" aria-label="Menu">
-                <q-icon name="menu" />
-            </q-btn>
+  <q-layout view="lHh Lpr fFf">
+    <q-header
+      elevated
+      color="negative"
+    >
+      <q-toolbar class=" bg-primary shadow-transition ">
+        <q-btn
+          flat
+          dense
+          round
+          @click="clickLeftDrawer"
+          aria-label="Menu"
+        >
+          <q-icon name="menu" />
+        </q-btn>
 
-            <q-toolbar-title>
-                Grandflex
-            </q-toolbar-title>
-            <q-btn flat v-if="token != ''" @click="dialog = true">
-                <q-icon name="power_settings_new" />
-            </q-btn>
-        </q-toolbar>
+        <q-toolbar-title>
+          Patty's Bakeshop
+          <!-- <img
+            style="margin-top: 5px;"
+            src="/statics/logo.jpg"
+            width="120"
+          /> -->
+        </q-toolbar-title>
+        <q-btn
+          flat
+          v-if="token != ''"
+          @click="dialog = true"
+        >
+          <q-icon name="power_settings_new" />
+        </q-btn>
+      </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawer" bordered content-class="bg-grey-2">
-       <q-input dense debounce="500" class="q-pa-sm" label="Search Menu..." v-model="searchMenu">
-            <template v-slot:append>
-                <q-icon name="search" />
-            </template>
-        </q-input>
-        <q-list>
-            <template v-for="(menu, i) in menus">
-                <q-expansion-item expand-separator :label="menu.name" :key="i" v-if="menu.all_children.length > 0" :to="`${menu.path}`">
-                    <!-- <template v-for="(subCat, a) in category.all_children">
+    <q-drawer
+      v-model="leftDrawer"
+      bordered
+      content-class="bg-grey-2"
+    >
+      <q-input
+        dense
+        debounce="500"
+        class="q-pa-sm"
+        label="Search Menu..."
+        v-model="searchMenu"
+      >
+        <template v-slot:append>
+          <q-icon name="search" />
+        </template>
+      </q-input>
+      <q-list>
+        <template v-for="(menu, i) in menus">
+          <q-expansion-item
+            expand-separator
+            :label="menu.name"
+            :key="i"
+            v-if="menu.all_children.length > 0"
+            :to="`${menu.path}`"
+          >
+            <!-- <template v-for="(subCat, a) in category.all_children">
                         <q-expansion-item :header-inset-level="1" expand-separator :label="subCat.name" :key="a" v-if="subCat.all_children.length > 0" :to="`/catalog/${category.name}/${subCat.optimus_id}/${subCat.name}`" exact>
                             <template v-for="(furtherCat, b) in subCat.all_children">
                                 <q-expansion-item switch-toggle-side dense-toggle :label="furtherCat.name" :header-inset-level="1" :content-inset-level="2" :key="b" v-if="furtherCat.all_children.length > 0">
@@ -38,25 +72,39 @@
                             <q-item-section>{{ subCat.name }}</q-item-section>
                         </q-item>
                     </template> -->
-                </q-expansion-item>
-                <template v-else>
-                  <q-item clickable v-ripple  :key="i" :to="`/dashboard/profile/${user.optimus_id}`" exact v-if="menu.name == 'Profile'">
-                    <q-item-section avatar>
-                        <q-icon :name="menu.icon" />
-                    </q-item-section>
-                    <q-item-section >{{ menu.name }} </q-item-section>
-                  </q-item>
-                  <q-item clickable v-ripple  :key="i" :to="`${menu.path}`" exact v-else>
-                    <q-item-section avatar>
-                        <q-icon :name="menu.icon" />
-                    </q-item-section>
-                    <q-item-section >{{ menu.name }}</q-item-section>
-                  </q-item>
-                </template>
+          </q-expansion-item>
+          <template v-else>
+            <q-item
+              clickable
+              v-ripple
+              :key="i"
+              :to="`/dashboard/profile/${user.optimus_id}`"
+              exact
+              v-if="menu.name == 'Profile'"
+            >
+              <q-item-section avatar>
+                <q-icon :name="menu.icon" />
+              </q-item-section>
+              <q-item-section>{{ menu.name }} </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :key="i"
+              :to="`${menu.path}`"
+              exact
+              v-else
+            >
+              <q-item-section avatar>
+                <q-icon :name="menu.icon" />
+              </q-item-section>
+              <q-item-section>{{ menu.name }}</q-item-section>
+            </q-item>
+          </template>
 
-            </template>
-        </q-list>
-        <!-- <q-list bordered class="rounded-borders">
+        </template>
+      </q-list>
+      <!-- <q-list bordered class="rounded-borders">
             <q-item-label header>Dashboard</q-item-label>
             <q-item to="/" :exact="true">
                 <q-item-section avatar>
@@ -99,24 +147,42 @@
     </q-drawer>
 
     <q-page-container>
-        <router-view />
+      <router-view />
     </q-page-container>
-    <q-dialog v-model="dialog" persistent>
-        <q-card>
-            <q-card-section class="row items-center">
-                <q-avatar icon="power_settings_new" color="primary" text-color="white" />
-                <span class="q-ml-sm">Are you sure you want to log-out?</span>
-            </q-card-section>
+    <q-dialog
+      v-model="dialog"
+      persistent
+    >
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar
+            icon="power_settings_new"
+            color="primary"
+            text-color="white"
+          />
+          <span class="q-ml-sm">Are you sure you want to log-out?</span>
+        </q-card-section>
 
-            <!-- Notice v-close-dialog -->
-            <q-card-actions align="right">
-                <q-btn flat label="Cancel" color="primary" v-close-popup />
-                <q-btn flat label="Logout" color="primary" v-close-popup @click="logout" />
-            </q-card-actions>
-        </q-card>
+        <!-- Notice v-close-dialog -->
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            label="Cancel"
+            color="primary"
+            v-close-popup
+          />
+          <q-btn
+            flat
+            label="Logout"
+            color="primary"
+            v-close-popup
+            @click="logout"
+          />
+        </q-card-actions>
+      </q-card>
     </q-dialog>
 
-</q-layout>
+  </q-layout>
 </template>
 
 <script>

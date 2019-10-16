@@ -1,9 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import {
-  LocalStorage,
-  Notify
-} from 'quasar'
+import { LocalStorage, Notify } from 'quasar'
 import routes from './routes'
 
 Vue.use(VueRouter)
@@ -13,7 +10,7 @@ Vue.use(VueRouter)
  * directly export the Router instantiation
  */
 
-export default function ({ store }/* { store, ssrContext } */) {
+export default function ({ store } /* { store, ssrContext } */) {
   const Router = new VueRouter({
     scrollBehavior: () => ({ y: 0 }),
     routes,
@@ -36,7 +33,7 @@ export default function ({ store }/* { store, ssrContext } */) {
           message: 'You need to login.'
         })
         LocalStorage.clear()
-        next('/login')
+        next('/')
       } else {
         // console.log('to', to)
         // store.dispatch('globals/setPageMeta', to.meta)

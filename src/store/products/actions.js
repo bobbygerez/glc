@@ -44,3 +44,11 @@ export const setSubCategories = ({ commit }, payload) => {
 export const setMoreCategories = ({ commit }, payload) => {
   commit('setMoreCategories', payload)
 }
+
+export const setGroups = ({ commit }, payload) => {
+  commit('setGroups', payload)
+}
+
+export const setCatalogs = ({ commit }, payload) => {
+  commit('setCatalogs', payload)
+}
