@@ -1,14 +1,49 @@
 <template>
-<div class="row">
+  <div class="row">
     <div class="col-sm-12 gt-sm">
-        <generic-table :data="serverData" :columns="columns" :pagination="serverPagination" @serverside-request="request" @search-change="filter = $event" :search-field="filter" @selected="selected" ref="product" :title="'All Products'" :loading="loading" :search-placeholder="'Search product...'" entity="Product" @add="add" @edit="edit" @restore="restore" @del="del">
-        </generic-table>
+      <generic-table
+        :data="serverData"
+        :columns="columns"
+        :pagination="serverPagination"
+        @serverside-request="request"
+        @search-change="filter = $event"
+        :search-field="filter"
+        @selected="selected"
+        ref="product"
+        :title="'All Products'"
+        :loading="loading"
+        :search-placeholder="'Search product...'"
+        entity="Product"
+        @add="add"
+        @edit="edit"
+        @restore="restore"
+        @del="del"
+      >
+      </generic-table>
     </div>
     <div class="col-sm-12 lt-md">
-        <grid :data="serverData" :columns="columns" :pagination="serverPagination" @serverside-request="request" @search-change="filter = $event" :search-field="filter" @selected="selected" ref="product" :title="'All Products'" :loading="loading" :search-placeholder="'Search product...'" :grid="true" entity="Product" @add="add" @edit="edit" @restore="restore" @del="del">
-        </grid>
+      <grid
+        :data="serverData"
+        :columns="columns"
+        :pagination="serverPagination"
+        @serverside-request="request"
+        @search-change="filter = $event"
+        :search-field="filter"
+        @selected="selected"
+        ref="product"
+        :title="'All Products'"
+        :loading="loading"
+        :search-placeholder="'Search product...'"
+        :grid="true"
+        entity="Product"
+        @add="add"
+        @edit="edit"
+        @restore="restore"
+        @del="del"
+      >
+      </grid>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -79,9 +114,6 @@ export default {
       this.setProduct({
         catalog_id: null,
         group_id: [],
-        main_category_id: null,
-        sub_category_id: null,
-        more_category_id: null,
         category_id: null,
         product_id: null,
         name: '',
@@ -95,48 +127,36 @@ export default {
       this.$axios.get(`/dashboard_products/${optimusId}/edit?id=${optimusId}`)
         .then(res => {
           var product = res.data.product
+
+          var groups = []
+
+          for (let i = 0; i < product.groups.length; i++) {
+            groups.push({
+              label: product.groups[i].name,
+              id: product.groups[i].id
+            })
+          }
+
           this.setProduct({
             optimus_id: product.optimus_id,
-            branch_id: {
-              label: product.branch.name,
-              value: product.branch.id
+            item_code: product.item_code,
+            category_id: {
+              label: product.category.name,
+              value: product.category.optimus_id
             },
-            main_category_id: null,
-            sub_category_id: null,
-            more_category_id: null,
-            category_id: null,
-            chart_account_id: null,
-            tax_type_id: null,
+            catalog_id: {
+              label: product.catalog.name,
+              value: product.catalog.optimus_id
+            },
+            group_id: groups,
             product_id: null,
             name: product.name,
             sku: product.sku,
             barcode: product.barcode,
             discount: product.discount,
-            price: product.price,
-            qty: product.qty,
             desc: product.desc,
             images: product.images
           })
-          this.setProductBranch({
-            label: res.data.product.branch.name,
-            value: res.data.product.branch.id
-          })
-          this.setProductMainCategory({
-            label: res.data.categories[0].name,
-            value: res.data.categories[0].id
-          })
-          if (res.data.categories.length > 2) {
-            this.setProductSubCategory({
-              label: res.data.categories[1].name,
-              value: res.data.categories[1].id
-            })
-          }
-          if (res.data.categories.length === 3) {
-            this.setProductMoreCategory({
-              label: res.data.categories[2].name,
-              value: res.data.categories[2].id
-            })
-          }
 
           this.$router.push({
             path: `/dashboard/products/${optimusId}`
@@ -198,6 +218,7 @@ export default {
           this.loading = false
         })
         .catch(err => {
+          this.$router.go(-1)
           this.catch(err)
         })
     }, 500)

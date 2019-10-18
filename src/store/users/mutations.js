@@ -122,3 +122,7 @@ export const setEditStreetLotBlk = (state, payload) => {
 export const setDialogChangePassword = (state, payload) => {
   state.dialogChangePassword = payload
 }
+
+export const setGroups = (state, payload) => {
+  state.groups = payload
+}

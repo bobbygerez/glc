@@ -19,7 +19,6 @@
           error-message="Username is required."
           :error="$v.locUser.username.$error"
           label="Username"
-          class="q-ma-sm"
           dense
         />
       </div>
@@ -30,7 +29,7 @@
           bottom-slots
           error-message="Email must be valid and required."
           label="Email"
-          class="q-ma-sm"
+          class="q-ml-sm"
           :error="$v.locUser.email.$error"
           dense
         />
@@ -40,9 +39,9 @@
           outlined
           v-model="$v.locUser.mobile.$model"
           bottom-slots
+          class="q-ml-sm"
           error-message="Mobile must be 11 digits and required."
           label="Mobile"
-          class="q-ma-sm"
           :error="$v.locUser.mobile.$error"
           dense
         />
@@ -54,7 +53,6 @@
           bottom-slots
           error-message="Firstname is required."
           label="Firstname"
-          class="q-ma-sm"
           :error="$v.locUser.firstname.$error"
           dense
         />
@@ -66,7 +64,7 @@
           bottom-slots
           error-message="Middlename is required."
           label="Middlename"
-          class="q-ma-sm"
+          class="q-ml-sm"
           :error="$v.locUser.middlename.$error"
           dense
         />
@@ -78,22 +76,35 @@
           bottom-slots
           error-message="Lastname is required."
           label="Lastname"
-          class="q-ma-sm"
+          class="q-ml-sm"
           :error="$v.locUser.lastname.$error"
           dense
         />
       </div>
-      <div class="col-12">
+      <div class="col-6">
         <q-select
           outlined
           v-model="$v.locUser.roles.$model"
           :options="roles"
           label="Roles"
-          class="q-ma-sm"
           :error="$v.locUser.roles.$error"
           bottom-slots
           error-message="Please add role/s."
           multiple
+          dense
+        />
+      </div>
+      <div class="col-6">
+        <q-select
+          outlined
+          v-model="locUser.group_id"
+          :options="locGroups"
+          label="Groups"
+          bottom-slots
+          error-message="Please add group/s."
+          class="q-ml-sm"
+          multiple
+          use-chips
           dense
         />
       </div>
@@ -103,8 +114,6 @@
           v-model="$v.locUser.address.province_id.$model"
           :options="provinces"
           label="Province"
-          class="q-ma-sm"
-          use-chips
           :error="$v.locUser.address.province_id.$error"
           bottom-slots
           error-message="Province is required."
@@ -113,12 +122,11 @@
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4">
         <q-select
+          class="q-ml-sm"
           outlined
           v-model="$v.locUser.address.city_id.$model"
           :options="cities"
           label="City"
-          class="q-ma-sm"
-          use-chips
           :error="$v.locUser.address.city_id.$error"
           bottom-slots
           error-message="City is required."
@@ -127,12 +135,11 @@
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4">
         <q-select
+          class="q-ml-sm"
           outlined
           v-model="$v.locUser.address.brgy_id.$model"
           :options="brgys"
           label="Brgys"
-          class="q-ma-sm"
-          use-chips
           :error="$v.locUser.address.brgy_id.$error"
           bottom-slots
           error-message="Barangay is required."
@@ -145,7 +152,6 @@
           outlined
           v-model="$v.locUser.address.street_lot_blk.$model"
           label="Blk, Lot and Street No."
-          class="q-ma-sm"
           :error="$v.locUser.address.street_lot_blk.$error"
           bottom-slots
           error-message="Street, lot and block is required."
@@ -199,6 +205,7 @@ export default {
   mixins: [genericPlaces],
   data () {
     return {
+      locGroups: [],
       locUser: {
         firstname: null,
         lastname: null,
@@ -257,7 +264,8 @@ export default {
   methods: {
     ...mapActions('users', [
       'setRoles',
-      'setEditCities'
+      'setEditCities',
+      'setGroups'
     ]),
     ...mapActions('provinces', ['setProvinces']),
     ...mapActions('cities', ['setCities']),
@@ -267,13 +275,21 @@ export default {
         this.setRoles(res.data.roles)
       })
     },
+    getGroups () {
+      this.$axios.get('/user_groups').then(res => {
+        this.setGroups(res.data.groups)
+        this.locGroups = res.data.groups
+      })
+    },
     cancel () {
       this.$router.go(-1)
     },
     data () {
       let u = this.editUser
-      console.log(u.roles)
       let roles = u.roles.map(function (v) {
+        return v.value
+      })
+      let groups = u.group_id.map(function (v) {
         return v.value
       })
       return {
@@ -284,6 +300,7 @@ export default {
         mobile: u.mobile,
         notes: u.notes,
         roles: roles,
+        groups: groups,
         address: {
           province_id: u.address.province_id.value,
           city_id: u.address.city_id.value,
@@ -317,7 +334,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('users', ['editUser', 'user']),
+    ...mapState('users', ['editUser', 'user', 'groups']),
     ...mapState('provinces', ['provinces']),
     ...mapState('cities', ['cities']),
     ...mapState('brgys', ['brgys']),
@@ -356,6 +373,7 @@ export default {
   },
   mounted () {
     this.getRoles()
+    this.getGroups()
     this.getProvinces()
     this.locUser = this.editUser
   },

@@ -171,6 +171,14 @@ export default {
               value: user.roles[i].id
             })
           }
+
+          let groups = []
+          for (var aa = 0; aa < user.groups.length; aa++) {
+            groups.push({
+              label: user.groups[aa].name,
+              value: user.groups[aa].value
+            })
+          }
           let address = {
             province_id: null,
             city_id: null,
@@ -207,7 +215,8 @@ export default {
             lastname: user.lastname,
             notes: user.notes,
             address: address,
-            roles: roles
+            roles: roles,
+            group_id: groups
           })
           this.$router.push({
             path: `/dashboard/user/${optimusId}`

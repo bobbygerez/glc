@@ -51,12 +51,12 @@
         <div class="col-xs-12 col-sm-6 col-md-4">
           <q-select
             outlined
-            v-model="$v.locProduct.main_category_id.$model"
+            v-model="$v.locProduct.category_id.$model"
             :options="mainCategories"
             label="Category"
             class="q-ml-sm"
             bottom-slots
-            :error="$v.locProduct.main_category_id.$error"
+            :error="$v.locProduct.category_id.$error"
             error-message="Category is required."
             dense
           />
@@ -259,7 +259,7 @@ export default {
       group_id: {
         required
       },
-      main_category_id: {
+      category_id: {
         required
       },
       catalog_id: {
@@ -379,6 +379,16 @@ export default {
           .post('dashboard_products', this.data())
           .then(res => {
             this.$v.$reset()
+            this.locProduct = {
+              item_code: '',
+              category_id: null,
+              catalog_id: null,
+              group_id: [],
+              product_id: null,
+              name: '',
+              desc: ''
+            }
+            this.$refs.uploader.files = []
             this.$q.notify({
               color: 'positive',
               icon: 'check',
@@ -412,15 +422,6 @@ export default {
       this.$router.go(-1)
     },
     data () {
-      let categoryId
-      if (this.locProduct.more_category_id != null) {
-        categoryId = this.locProduct.more_category_id.value
-      } else if (this.locProduct.sub_category_id != null) {
-        categoryId = this.locProduct.sub_category_id.value
-      } else {
-        categoryId = this.locProduct.main_category_id.value
-      }
-
       const fd = new FormData()
       for (var i = 0; i <= this.selectedFile.length; i++) {
         if (this.selectedFile[i] !== undefined) {
@@ -438,7 +439,7 @@ export default {
       fd.append('is_primary', this.is_primary)
       fd.append('optimus_id', this.locProduct.optimus_id)
       fd.append('group_ids', groupIds)
-      fd.append('category_id', categoryId)
+      fd.append('category_id', this.locProduct.category_id.value)
       fd.append('catalog_id', this.locProduct.catalog_id.value)
       fd.append('name', this.locProduct.name)
       fd.append('item_code', this.locProduct.item_code)

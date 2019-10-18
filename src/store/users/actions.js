@@ -120,3 +120,7 @@ export const setEditStreetLotBlk = ({ commit }, payload) => {
 export const setDialogChangePassword = ({ commit }, payload) => {
   commit('setDialogChangePassword', payload)
 }
+
+export const setGroups = ({ commit }, payload) => {
+  commit('setGroups', payload)
+}

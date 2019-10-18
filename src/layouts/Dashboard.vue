@@ -103,47 +103,24 @@
           </template>
 
         </template>
+        <template v-for="group in user.groups">
+          <q-item
+            clickable
+            v-ripple
+            :key="group.optimus_id"
+            exact
+            :to="`/dashboard/group-products/${group.optimus_id}`"
+          >
+            <q-item-section avatar>
+              <q-icon
+                name="fas fa-store"
+                size="sm"
+              />
+            </q-item-section>
+            <q-item-section>{{ group.name }} </q-item-section>
+          </q-item>
+        </template>
       </q-list>
-      <!-- <q-list bordered class="rounded-borders">
-            <q-item-label header>Dashboard</q-item-label>
-            <q-item to="/" :exact="true">
-                <q-item-section avatar>
-                    <q-icon name="home" />
-                </q-item-section>
-                <q-item-section>Home</q-item-section>
-            </q-item>
-            <q-item to="/dashboard" :exact="true">
-                <q-item-section avatar>
-                    <q-icon name="dashboard" />
-                </q-item-section>
-                <q-item-section>Dashboard</q-item-section>
-            </q-item>
-            <q-expansion-item expand-separator icon="account_circle" label="Profile" :to="`/dashboard/profile/${user.optimus_id}`" :exact="true">
-                <q-item side v-ripple clickable exact>
-                    <q-item-section @click="showPasswordModal" style="margin-left: 60px;">
-                        Change Password
-                    </q-item-section>
-                </q-item>
-            </q-expansion-item>
-            <q-item to="/dashboard/users" :exact="true">
-                <q-item-section avatar>
-                    <q-icon name="supervisor_account" />
-                </q-item-section>
-                <q-item-section>Users</q-item-section>
-            </q-item>
-            <q-item to="/dashboard/roles" :exact="true">
-                <q-item-section avatar>
-                    <q-icon name="recent_actors" />
-                </q-item-section>
-                <q-item-section>Roles</q-item-section>
-            </q-item>
-            <q-item to="/dashboard/categories" :exact="true">
-                <q-item-section avatar>
-                    <q-icon name="list" />
-                </q-item-section>
-                <q-item-section>Categories</q-item-section>
-            </q-item>
-        </q-list> -->
     </q-drawer>
 
     <q-page-container>
@@ -263,6 +240,9 @@ export default {
   },
   created () {
     this.getMenus()
+  },
+  mounted () {
+    console.log(this.user)
   },
   watch: {
     searchMenu (val) {

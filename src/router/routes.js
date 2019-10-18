@@ -327,6 +327,19 @@ const routes = [
         component: () => import('pages/dashboard/catalogs/edit.vue')
       }
     ]
+  },
+  {
+    path: '/dashboard/group-products/:id',
+    meta: {
+      needAuth: true
+    },
+    component: () => import('layouts/Dashboard.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/dashboard/group-products/index.vue')
+      }
+    ]
   }
 ]
 

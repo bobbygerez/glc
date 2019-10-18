@@ -165,10 +165,10 @@ export default {
           this.lastPage = res.data.catalogs.last_page
           this.loading = false
         })
-      // .catch(err => {
-      //   this.$router.go(-1)
-      //   this.catch(err)
-      // })
+        .catch(err => {
+          this.$router.go(-1)
+          this.catch(err)
+        })
     }, 500)
 
     this.request({

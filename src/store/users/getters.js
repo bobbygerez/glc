@@ -22,3 +22,5 @@ export const editCities = (state) => state.editCities
 export const editBrgys = (state) => state.editBrgys
 
 export const dialogChangePassword = (state) => state.dialogChangePassword
+
+export const groups = (state) => state.groups
